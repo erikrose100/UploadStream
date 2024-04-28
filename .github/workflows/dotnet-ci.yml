@@ -23,13 +23,13 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build UploadStream -c debug -v minimal
-      - name: Build
+      - name: Build tests
         run: dotnet build UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
       - name: Copy test files
         run: |
           mkdir UploadStream.UnitTests/bin/Debug/net8.0/resources
           cp File.Api/resources/* UploadStream.UnitTests/bin/Debug/net8.0/resources
       - name: Test with the dotnet CLI
-        run: dotnet test UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
+        run: dotnet test --no-build UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
       - name: Package nuget
         run: dotnet pack --no-build UploadStream/UploadStream.csproj -c debug -v minimal -o .nupkgs/
