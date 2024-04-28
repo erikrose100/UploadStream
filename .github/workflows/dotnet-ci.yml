@@ -32,4 +32,4 @@ jobs:
       - name: Test with the dotnet CLI
         run: dotnet test UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
       - name: Package nuget
-        run: dotnet pack UploadStream/UploadStream.csproj -c release -v minimal -o .nupkgs/
+        run: dotnet pack --no-build UploadStream/UploadStream.csproj -c debug -v minimal -o .nupkgs/
