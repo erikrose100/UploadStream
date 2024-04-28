@@ -37,4 +37,7 @@ artifacts/
 # Node.js Tools for Visual Studio
 node_modules/
 
+# Mono
+*.mono/
+
 *.snk
