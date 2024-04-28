@@ -1,0 +1,35 @@
+name: dotnet package
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET 8.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build UploadStream -c debug -v minimal
+      - name: Build
+        run: dotnet build UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
+      - name: Copy test files
+        run: |
+          mkdir UploadStream.UnitTests/bin/Debug/net8.0/resources
+          cp File.Api/resources/* UploadStream.UnitTests/bin/Debug/net8.0/resources
+      - name: Test with the dotnet CLI
+        run: dotnet test UploadStream.UnitTests/UploadStream.UnitTests.csproj -v minimal
+      - name: Package nuget
+        run: dotnet pack UploadStream/UploadStream.csproj -c release -v minimal -o .nupkgs/
