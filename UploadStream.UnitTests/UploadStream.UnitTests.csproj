@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -22,8 +22,8 @@
     <ProjectReference Include="..\UploadStream\UploadStream.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="IF NOT EXIST $(TargetDir)resources mkdir $(TargetDir)resources&#xD;&#xA;copy $(SourceDir)..\resources\* $(TargetDir)resources\" />
-  </Target>
+  </Target> -->
 
 </Project>
